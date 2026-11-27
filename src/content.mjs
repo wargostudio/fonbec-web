@@ -28,6 +28,7 @@ export const site = {
 };
 
 export const nav = [
+  { label: 'Inicio', href: '/' },
   {
     label: 'Nosotros',
     href: '/quienes-somos/',
