@@ -569,7 +569,10 @@ ${pageHero({ kicker: 'Colaborar', title: 'Tu ayuda llega <em>con nombre y apelli
         <h3>Desde Argentina</h3>
         <p>Doná de forma segura con débito automático o tarjeta, a través de TuCuota.</p>
         ${btn('Donar ahora', site.donate.argentina, 'lime', ' target="_blank" rel="noopener"')}
-        <figure class="donate__qr"><img src="/assets/img/mercadopago-qr.webp" alt="Código QR para donar a FONBEC con Mercado Pago" width="574" height="848" loading="lazy" decoding="async"><figcaption>O escaneá con la app de Mercado Pago</figcaption></figure>
+        <figure class="donate__qr">
+          <span class="donate__qr-code"><img src="/assets/img/mercadopago-qr-codigo.webp" alt="Código QR para donar a FONBEC con Mercado Pago" width="380" height="380" loading="lazy" decoding="async"></span>
+          <figcaption><strong>Escaneá y doná</strong>Abrí la app de Mercado Pago o Mercado Libre y apuntá la cámara al código.<small>¿Estás en el celular? Usá el botón “Donar ahora”.</small></figcaption>
+        </figure>
       </div>
       <div class="donate__opt reveal" style="--d:.1s">
         <h3>Desde el exterior</h3>
