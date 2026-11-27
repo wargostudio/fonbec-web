@@ -1,0 +1,190 @@
+# ============================================================================
+# .htaccess for premium static websites — copy as `.htaccess` to project root.
+# Targets Apache (Hostinger default) and LiteSpeed.
+# ============================================================================
+#
+# What this does:
+# - HTML / JS / CSS / JSON: revalidate every visit (no stale code after deploy).
+# - Images / fonts: cache 1 month (they change rarely; rename if needed).
+# - MIME types: ensures Hostinger serves WebP and JS correctly.
+# - Compression: gzip text assets when supported.
+# - Security headers: minimal hardening.
+#
+# Doesn't work on Nginx VPS — those need server-level config.
+
+# ----- Cache duration -----
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Documents — never cache
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # Code — revalidate hourly (server still responds 304 if unchanged)
+  ExpiresByType text/css "access plus 1 hours"
+  ExpiresByType application/javascript "access plus 1 hours"
+  ExpiresByType text/javascript "access plus 1 hours"
+  ExpiresByType application/json "access plus 1 hours"
+
+  # Media — cache long (use cache-busting filename if you change them)
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/avif "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+
+  # Fonts — cache long, immutable
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+</IfModule>
+
+# ----- Cache-Control headers -----
+<IfModule mod_headers.c>
+  # HTML always fresh
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # JS / CSS / JSON: revalidate every visit
+  <FilesMatch "\.(css|js|mjs|json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Images & fonts: long cache
+  <FilesMatch "\.(webp|jpg|jpeg|png|svg|avif|ico|woff|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # Minimal security headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ----- Correct MIME types (some shared hosts default wrong) -----
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType application/javascript .js
+  AddType application/javascript .mjs
+  AddType text/css .css
+  AddType application/json .json
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+  AddType image/svg+xml .svg
+</IfModule>
+
+# ----- Gzip compression for text assets -----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml font/woff font/woff2
+</IfModule>
+
+
+ErrorDocument 404 /404.html
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS + www (dominio canónico)
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^fonbec\.org\.ar$ [NC]
+  RewriteRule ^(.*)$ https://www.fonbec.org.ar/$1 [R=301,L]
+
+  # Redirecciones desde el sitio WordPress anterior
+  RewriteCond %{QUERY_STRING} (^|&)page_id=10(&|$)
+  RewriteRule ^(index\.php)?$ /quienes-somos/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=12(&|$)
+  RewriteRule ^(index\.php)?$ /quienes-somos/#pilares [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=14(&|$)
+  RewriteRule ^(index\.php)?$ /que-hacemos/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=18(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#amigos [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=20(&|$)
+  RewriteRule ^(index\.php)?$ /impacto/#transparencia [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=22(&|$)
+  RewriteRule ^(index\.php)?$ /impacto/#empresas [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=25(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#apadrinar [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=27(&|$)
+  RewriteRule ^(index\.php)?$ /impacto/#empresas [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=29(&|$)
+  RewriteRule ^(index\.php)?$ /contacto/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=92(&|$)
+  RewriteRule ^(index\.php)?$ /historias/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=149(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#apadrinar [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=160(&|$)
+  RewriteRule ^(index\.php)?$ /contacto/#filiales [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=197(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#voluntariado [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=243(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#apadrinar [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=533(&|$)
+  RewriteRule ^(index\.php)?$ /quienes-somos/#red [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=1771(&|$)
+  RewriteRule ^(index\.php)?$ /quienes-somos/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=2003(&|$)
+  RewriteRule ^(index\.php)?$ /quienes-somos/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=2055(&|$)
+  RewriteRule ^(index\.php)?$ /historias/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=2056(&|$)
+  RewriteRule ^(index\.php)?$ /historias/ [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=2128(&|$)
+  RewriteRule ^(index\.php)?$ /colaborar/#becarios [R=301,L,NE,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)p=1643(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#maria-cristina [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?una-maestra-que-vale-un-millon/?$ /historias/#maria-cristina [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=1584(&|$)
+  RewriteRule ^(index\.php)?$ /historia/#y2018 [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?bodegas-abiertas-a-beneficio-de-fonbec-mendoza/?$ /historia/#y2018 [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=1511(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#mauro [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?encuentro-total-filial-fonbec-bs-as/?$ /historias/#mauro [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=1499(&|$)
+  RewriteRule ^(index\.php)?$ /impacto/#prensa [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?el-diario-del-centro-ayuda-que-abre-puertas-y-da-esperanzas/?$ /impacto/#prensa [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=1495(&|$)
+  RewriteRule ^(index\.php)?$ /impacto/#prensa [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?la-nacion-no-pueden-terminar-sus-estudios-por-falta-de-recursos-y-buscan-padrinos/?$ /impacto/#prensa [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=899(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#santos [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?historia-de-final-feliz/?$ /historias/#santos [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=884(&|$)
+  RewriteRule ^(index\.php)?$ /historia/#y2014 [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?garayoa-joven-sobresaliente/?$ /historia/#y2014 [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=595(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#sergio [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?predicando-con-el-ejemplo/?$ /historias/#sergio [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=521(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#catherina [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?de-ahijada-a-madrina-2/?$ /historias/#catherina [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=497(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#voluntarios-michigan [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?10-semanas-en-fonbec-2/?$ /historias/#voluntarios-michigan [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=457(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#ezequiel [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?ezequiel-caceres-becario-de-fonbec-mendoza-fue-seleccionado-por-la-embajada-de-estados-unidos/?$ /historias/#ezequiel [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=395(&|$)
+  RewriteRule ^(index\.php)?$ /historia/#y2013 [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?fonbec-miembro-de-la-federacion-el-foro-del-sector-social-2/?$ /historia/#y2013 [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=323(&|$)
+  RewriteRule ^(index\.php)?$ /historia/#y2012 [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?el-premio-al-esfuerzo-educativo/?$ /historia/#y2012 [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=260(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#ezequiel [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?jovenes-embajadores-2012/?$ /historias/#ezequiel [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=232(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#lectura [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?a-leer/?$ /historias/#lectura [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)p=220(&|$)
+  RewriteRule ^(index\.php)?$ /historias/#deportistas [R=301,L,NE,QSD]
+  RewriteRule ^(index\.php/)?deportistas/?$ /historias/#deportistas [R=301,L,NE]
+  RewriteRule ^novedades(/.*)?$ /historias/ [R=301,L]
+
+  # Contenido spam inyectado en el sitio anterior y rutas de WordPress: 410 (eliminado definitivamente)
+  RewriteCond %{QUERY_STRING} (^|&)(p|cat|feed|page_id|rest_route|s)= [NC]
+  RewriteRule ^(index\.php)?$ - [G,L]
+  RewriteRule ^(wp-admin|wp-content|wp-includes|wp-json|xmlrpc\.php|wp-login\.php|feed)(/.*)?$ - [G,L]
+</IfModule>

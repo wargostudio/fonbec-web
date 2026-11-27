@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /enviar.php
+
+Sitemap: https://www.fonbec.org.ar/sitemap.xml
