@@ -871,6 +871,7 @@ body.menu-open .wa-float { opacity: 0; pointer-events: none; }
 .give__grid { display: grid; gap: 48px; align-items: start; }
 .give__n { font-size: 0.9rem; letter-spacing: 0.1em; color: var(--teal-ink); margin-bottom: 18px; }
 .give__text p { color: var(--ink-2); max-width: 54ch; }
+.give--dark .give__text p:not(.give__n) { color: var(--on-dark); font-size: 1.06rem; }
 .give__amount { margin-top: 32px; padding: 24px; border-radius: var(--radius); background: var(--lime-wash); border-left: 4px solid var(--lime); }
 .give__amount-label { font-weight: 500; color: var(--ink) !important; margin-bottom: 6px; }
 .give__amount p:last-child { margin: 0; }
@@ -890,7 +891,8 @@ body.menu-open .wa-float { opacity: 0; pointer-events: none; }
 .donate__qr figcaption { font-size: 0.95rem; color: var(--ink-2); text-align: center; }
 .donate__qr figcaption strong { display: block; font-size: 1.25rem; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
 .donate__qr figcaption small { display: block; margin-top: 10px; font-size: 0.85rem; color: var(--mute); }
-@media (min-width: 560px) { .donate__qr { grid-template-columns: 240px 1fr; } .donate__qr figcaption { text-align: left; } }
+.donate__opt:has(.donate__qr) { container-type: inline-size; }
+@container (min-width: 500px) { .donate__qr { grid-template-columns: 220px 1fr; } .donate__qr-code { width: 220px; } .donate__qr figcaption { text-align: left; } }
 
 /* Formularios */
 .form { padding: clamp(24px, 4vw, 44px); border-radius: calc(var(--radius) + 6px); background: var(--white); box-shadow: 0 30px 80px -40px rgba(7, 60, 53, 0.35), inset 0 0 0 1px var(--line); color: var(--ink); }

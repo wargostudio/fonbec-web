@@ -581,7 +581,7 @@ ${pageHero({ kicker: 'Colaborar', title: 'Tu ayuda llega <em>con nombre y apelli
         ${btn('Donar ahora', site.donate.argentina, 'lime', ' target="_blank" rel="noopener"')}
         <figure class="donate__qr">
           <span class="donate__qr-code"><img src="/assets/img/mercadopago-qr-codigo.webp" alt="Código QR para donar a FONBEC con Mercado Pago" width="380" height="380" loading="lazy" decoding="async"></span>
-          <figcaption><strong>Escaneá y doná</strong>Abrí la app de Mercado Pago o Mercado Libre y apuntá la cámara al código.<small>¿Estás en el celular? Usá el botón “Donar ahora”.</small></figcaption>
+          <figcaption><strong>Escaneá y doná</strong>Abrí la app de Mercado Pago y apuntá la cámara al código QR.<small>¿Estás en el celular? Usá el botón “Donar ahora”.</small></figcaption>
         </figure>
       </div>
       <div class="donate__opt reveal" style="--d:.1s">
