@@ -164,8 +164,8 @@ export function sponsorMarquee() {
 
 export const waysToJoin = [
   { n: '01', id: 'apadrinar', title: 'Apadriná', text: 'Acompañá a un estudiante con un aporte mensual y una carta que va y viene.', href: '/colaborar/#apadrinar' },
-  { n: '02', id: 'voluntariado', title: 'Sumá tu tiempo', text: 'Más de 100 voluntarios hacen posible el trabajo cotidiano de FONBEC.', href: '/colaborar/#voluntariado' },
-  { n: '03', id: 'amigos', title: 'Doná', text: 'Como Amigo de FONBEC, con el monto que puedas, sostenés la Misión.', href: '/colaborar/#amigos' },
+  { n: '02', id: 'amigos', title: 'Doná', text: 'Como Amigo de FONBEC, con el monto que puedas, sostenés la Misión.', href: '/colaborar/#amigos' },
+  { n: '03', id: 'voluntariado', title: 'Sumá tu tiempo', text: 'Más de 100 voluntarios hacen posible el trabajo cotidiano de FONBEC.', href: '/colaborar/#voluntariado' },
   { n: '04', id: 'empresas', title: 'Tu empresa', text: 'Canalizá tu programa de Responsabilidad Social a través de la educación.', href: '/colaborar/#empresas' },
   { n: '05', id: 'becarios', title: 'Quiero estudiar', text: '¿Tenés muchas ganas de estudiar y necesitás apoyo? Empezá tu camino.', href: '/colaborar/#becarios' },
 ];
