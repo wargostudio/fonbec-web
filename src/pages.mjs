@@ -244,16 +244,26 @@ ${pageHero({
   aside: orb({ src: '/assets/img/chicos-banner-fonbec.webp', alt: 'Chicos y chicas de FONBEC con una bandera pintada con sus manos', w: 1400, h: 788, lazy: false, priority: true, cls: 'phero__orb' }),
 })}
 
-<section class="mission">
-  <div class="wrap mission__grid">
-    ${eyebrow('', 'Misión')}
-    <blockquote class="mission__quote reveal"><p>${mission.statement}</p></blockquote>
+<section class="mission" aria-labelledby="mission-title">
+  <div class="wrap mission__top">
+    <div class="mission__media reveal">
+      ${orb({ src: '/assets/img/becaria-certificado.webp', alt: 'Una becaria sonríe con su certificado de reconocimiento junto al logo de FONBEC', w: 1200, h: 862, cls: 'mission__orb' })}
+      <span class="mission__badge" aria-hidden="true"><strong>1999</strong>desde</span>
+    </div>
+    <div class="mission__text">
+      ${eyebrow('', 'Nuestra misión')}
+      <h2 class="visually-hidden" id="mission-title">Misión de FONBEC</h2>
+      <p class="mission__statement reveal" data-marks>Posibilitar, mediante <mark>un aporte económico</mark> y <mark>acompañamiento académico y personal</mark>, que estudiantes de entornos socio-económicos vulnerables puedan <mark>continuar sus estudios</mark>, estimulando el esfuerzo, y concretar sus <mark>metas académicas y personales.</mark></p>
+    </div>
   </div>
   <div class="wrap">
-    <p class="mission__intro reveal">Nuestra Misión es <strong>educativa, integral, circular y vinculante.</strong></p>
-    <ol class="attrs attrs--large">${mission.attributes
-      .map((a, i) => `<li class="reveal" style="--d:${i * 0.08}s"><span class="attrs__mark" aria-hidden="true"></span><h3>${a.name}</h3><p>${a.text}</p></li>`)
-      .join('')}</ol>
+    <div class="wheel">
+      <div class="wheel__core reveal" aria-hidden="true"><span class="wheel__orbit"></span><span class="wheel__disc"></span><span class="wheel__ring"></span><p>Nuestra Misión es</p></div>
+      <p class="visually-hidden">Nuestra Misión es educativa, integral, circular y vinculante.</p>
+      <ol class="wheel__items">${mission.attributes
+        .map((x, i) => `<li class="wheel__item wheel__item--${i + 1} reveal" style="--d:${i * 0.1}s"><span class="wheel__n">0${i + 1}</span><h3>${x.name}</h3><p>${x.text}</p></li>`)
+        .join('')}</ol>
+    </div>
   </div>
 </section>
 
