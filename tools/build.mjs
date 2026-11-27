@@ -72,14 +72,24 @@ const rules = [
 const htaccess = `${readFileSync(join(root, 'src/templates/htaccess.base'), 'utf8')}
 ErrorDocument 404 /404.html
 DirectoryIndex index.html
+Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # HTTPS + www (dominio canónico)
-  RewriteCond %{HTTPS} !=on [OR]
+  # Si el hosting publica la raíz del repositorio (Hostinger + Git), la raíz reenvía aquí
+  # internamente. Si alguien pide /dist/... directamente, lo llevamos a la URL limpia.
+  RewriteCond %{THE_REQUEST} ^\\S+\\s/dist/(\\S*)\\s
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # Dominio sin www → www (solo para el dominio oficial)
   RewriteCond %{HTTP_HOST} ^fonbec\\.org\\.ar$ [NC]
   RewriteRule ^(.*)$ https://www.fonbec.org.ar/$1 [R=301,L]
+
+  # HTTPS manteniendo el dominio que se esté usando (también dominios temporales de Hostinger)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
   # Redirecciones desde el sitio WordPress anterior
 ${rules}

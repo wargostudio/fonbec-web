@@ -54,7 +54,7 @@ Sitio institucional completo, estático y sin dependencias de ejecución.
 1. Editar textos en `src/content.mjs` (datos institucionales, filiales, testimonios, cifras, documentos) o `src/pages.mjs` (estructura de cada página). Estilos en `src/static/css/styles.css`.
 2. Ejecutar `node tools/build.mjs` → regenera `dist/`.
 3. Ejecutar `node tools/qa.mjs` → revisa enlaces, anclas, imágenes, `alt`, `h1` y metadatos.
-4. Subir el contenido de `dist/` al hosting. Cambiar `version` en `src/content.mjs` en cada publicación (fuerza a los navegadores a cargar el CSS/JS nuevo).
+4. Publicar. **Hostinger con Git:** conectar este repositorio (rama `main`) a `public_html`; el `.htaccess` de la raíz sirve `dist/` automáticamente. **Sin Git:** subir solo el contenido de `dist/` a `public_html`. Cambiar `version` en `src/content.mjs` en cada publicación (fuerza a los navegadores a cargar el CSS/JS nuevo).
 
 **Agregar una historia:** sumar un objeto al array `stories` de `src/content.mjs` (id, título, resumen y, si querés, el texto completo en `src/data/posts.json`). Las fotos de la galería y de egresados están en los arrays `moments` y `graduates`.
 **Agregar fotos:** convertir a WebP (`cwebp -q 82 foto.jpg -o src/static/assets/img/foto.webp`) y referenciarla.
