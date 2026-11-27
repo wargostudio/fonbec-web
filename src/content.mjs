@@ -9,7 +9,7 @@ export const site = {
   legalName: 'Fundación FONBEC — Fondo de Becas para Estudiantes',
   url: 'https://www.fonbec.org.ar',
   locale: 'es_AR',
-  version: '20261127',
+  version: '20261127b',
   tagline: 'Fondo de Becas para Estudiantes',
   description:
     'FONBEC es una fundación que conecta dos mundos: el de chicos que quieren estudiar y el de personas generosas que quieren ayudar. Becas, cartas y acompañamiento desde 1999.',

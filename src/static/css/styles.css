@@ -37,7 +37,7 @@
   --radius: 14px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --header-h: 72px;
+  --header-h: 76px;
 }
 
 /* ---------- 2. Base ---------- */
@@ -131,7 +131,7 @@ h1 em, h2 em, .h2 em, .purpose__big em, .cta-band__title em, .site-footer__cta e
 .site-header.is-hidden { transform: translateY(-100%); }
 .site-header__inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: block; flex: none; }
-.brand img { width: auto; height: 44px; }
+.brand img { width: auto; height: 54px; }
 .nav { display: none; }
 .site-header__actions { display: flex; align-items: center; gap: 12px; }
 .site-header__actions .btn { display: none; }
@@ -143,8 +143,8 @@ h1 em, h2 em, .h2 em, .purpose__big em, .cta-band__title em, .site-footer__cta e
 .burger[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
 
 @media (min-width: 1080px) {
-  :root { --header-h: 88px; }
-  .brand img { height: 50px; }
+  :root { --header-h: 96px; }
+  .brand img { height: 66px; }
   .nav { display: block; }
   .nav__list { display: flex; align-items: center; gap: 4px; }
   .nav__link { position: relative; display: inline-flex; align-items: center; gap: 4px; padding: 10px 14px; text-decoration: none; font-weight: 450; font-size: 0.98rem; border-radius: 999px; transition: background-color 0.25s; }
